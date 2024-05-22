@@ -1,36 +1,18 @@
-# Python package
-# Create and test a Python package on multiple Python versions.
-# Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/python
+variables:
+# Azure Resource Manager connection created during pipeline creation
+azureServiceConnectionId: '<GUID>'
 
-trigger:
-- main
+# Web app name
+webAppName: '<your-web-app-name>'
 
-pool:
-  vmImage: ubuntu-latest
-strategy:
-  matrix:
-    Python27:
-      python.version: '2.7'
-    Python35:
-      python.version: '3.5'
-    Python36:
-      python.version: '3.6'
-    Python37:
-      python.version: '3.7'
+# Agent VM image name
+vmImageName: 'ubuntu-latest'
 
-steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '$(python.version)'
-  displayName: 'Use Python $(python.version)'
+# Environment name
+environmentName: '<your-web-app-name>'
 
-- script: |
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
-  displayName: 'Install dependencies'
+# Project root folder.
+projectRoot: $(System.DefaultWorkingDirectory)
 
-- script: |
-    pip install pytest pytest-azurepipelines
-    pytest
-  displayName: 'pytest'
+# Python version: 3.11. Change this to match the Python runtime version running on your web app.
+pythonVersion: '3.11'
